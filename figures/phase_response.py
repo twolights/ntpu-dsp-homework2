@@ -1,42 +1,30 @@
-from typing import Tuple
+import functools
+from typing import Tuple, Callable
 
 import numpy as np
 
 from . import BaseFigure
 from ._common import utils
-
-UNWRAP_RADIAN_THRESHOLD = 5
+from ._functions import ARG, unwrap_ARG
 
 
 class PhaseResponseFigure(BaseFigure):
-    @staticmethod
-    def ARG(x: complex):
-        return np.arctan2(x.imag, x.real)
+    principal_phase_of_H: Callable
 
-    @staticmethod
-    def unwrap_ARG(y: np.ndarray):
-        y = np.array(y, copy=True)
-        length = y.shape[0] - 1
-        middle_index = int(length / 2)
-        for i, v in enumerate(y):
-            if i == 0 or i == length:
-                continue
-            diff = (y[i + 1] - v)
-            if np.abs(diff) > UNWRAP_RADIAN_THRESHOLD:
-                y[i + 1:] -= np.sign(diff) * 2 * np.pi
-        y -= y[middle_index]  # normalize to value at 0
-        return y
+    def __init__(self, H_of_omega: Callable) -> None:
+        def principal_phase_of_H(H: Callable, omega: float):
+            return ARG(H(omega))
+
+        super().__init__(H_of_omega)
+        self.principal_phase_of_H = functools.partial(principal_phase_of_H, H_of_omega)
 
     def _label_upper(self) -> Tuple[str, str]:
         return ('(a) Principal Value of Phase Response',
                 r'$\mathregular{ARG[H(e^{j\omega})]}$')
 
     def _plot_upper(self, x: np.ndarray):
-        def principal_phase_of_H(omega: float):
-            return self.ARG(self.H_of_omega(omega))
-
         utils.do_plot(self.upper,
-                      x, np.apply_along_axis(principal_phase_of_H, 0, x),
+                      x, np.apply_along_axis(self.principal_phase_of_H, 0, x),
                       y_limit=(-4, 4))
 
     def _label_lower(self) -> Tuple[str, str]:
@@ -44,9 +32,5 @@ class PhaseResponseFigure(BaseFigure):
                 r'$\mathregular{arg[H(e^{j\omega})]}$')
 
     def _plot_lower(self, x: np.ndarray):
-        def principal_phase_of_H(omega: float):
-            return self.ARG(self.H_of_omega(omega))
-
-        y = self.unwrap_ARG(np.apply_along_axis(principal_phase_of_H, 0, x))
-
+        y = unwrap_ARG(np.apply_along_axis(self.principal_phase_of_H, 0, x))
         utils.do_plot(self.lower, x, y)

@@ -11,7 +11,7 @@ class GroupDelayFigure(BaseFigure):
         return (r'(a) Group delay of $\it{H(z)}$',
                 r'$\mathregular{grd[H(e^{j\omega})]}$')
 
-    def _plot_upper(self, x: np.ndarray):
+    def _plot_upper(self, x: np.ndarray) -> None:
         def principal_phase_of_H(omega: float):
             return ARG(self.H_of_omega(omega))
 
@@ -23,7 +23,7 @@ class GroupDelayFigure(BaseFigure):
         return ('(b) Magnitude of Frequency Response',
                 r'$\mathregular{\left|H(e^{j\omega})\right|}$')
 
-    def _plot_lower(self, x: np.ndarray):
+    def _plot_lower(self, x: np.ndarray) -> None:
         def magnitude_of_H(omega: float):
             return magnitude(self.H_of_omega(omega))
 

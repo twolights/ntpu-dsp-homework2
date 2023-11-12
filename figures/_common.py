@@ -24,13 +24,13 @@ class BaseFigure:
     def _label_upper(self) -> Tuple[str, str]:
         raise NotImplementedError()
 
-    def _plot_upper(self, x: np.ndarray):
+    def _plot_upper(self, x: np.ndarray) -> None:
         raise NotImplementedError()
 
     def _label_lower(self) -> Tuple[str, str]:
         raise NotImplementedError()
 
-    def _plot_lower(self, x: np.ndarray):
+    def _plot_lower(self, x: np.ndarray) -> None:
         raise NotImplementedError()
 
     def _plot(self) -> None:

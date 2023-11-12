@@ -22,7 +22,7 @@ class PhaseResponseFigure(BaseFigure):
         return ('(a) Principal Value of Phase Response',
                 r'$\mathregular{ARG[H(e^{j\omega})]}$')
 
-    def _plot_upper(self, x: np.ndarray):
+    def _plot_upper(self, x: np.ndarray) -> None:
         utils.do_plot(self.upper,
                       x, np.apply_along_axis(self.principal_phase_of_H, 0, x),
                       y_limit=(-4, 4))
@@ -31,6 +31,6 @@ class PhaseResponseFigure(BaseFigure):
         return ('(b) Unwrapped Phase Response',
                 r'$\mathregular{arg[H(e^{j\omega})]}$')
 
-    def _plot_lower(self, x: np.ndarray):
+    def _plot_lower(self, x: np.ndarray) -> None:
         y = unwrap_ARG(np.apply_along_axis(self.principal_phase_of_H, 0, x))
         utils.do_plot(self.lower, x, y)

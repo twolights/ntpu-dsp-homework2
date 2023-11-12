@@ -25,6 +25,7 @@ LINE_COLOR = 'darkslateblue'
 
 def _init_plot_xticks(plot: Axes, pi_interval: float) -> None:
     def _populate_label(multiplier):
+        multiplier = round(multiplier, 1)
         if multiplier == 0:
             return '0'
         elif multiplier == -1:

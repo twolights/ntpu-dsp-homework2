@@ -5,6 +5,8 @@ import numpy as np
 from . import BaseFigure
 from ._common import utils
 
+UNWRAP_RADIAN_THRESHOLD = 5
+
 
 class PhaseResponseFigure(BaseFigure):
     @staticmethod
@@ -13,14 +15,17 @@ class PhaseResponseFigure(BaseFigure):
 
     @staticmethod
     def unwrap_ARG(y: np.ndarray):
-        # TODO unwrap here
         y = np.array(y, copy=True)
+        length = y.shape[0] - 1
+        middle_index = int(length / 2)
+        for i, v in enumerate(y):
+            if i == 0 or i == length:
+                continue
+            diff = (y[i + 1] - v)
+            if np.abs(diff) > UNWRAP_RADIAN_THRESHOLD:
+                y[i + 1:] -= np.sign(diff) * 2 * np.pi
+        y -= y[middle_index]  # normalize to value at 0
         return y
-
-    # TODO remove this one
-    @staticmethod
-    def arg(x: complex):
-        return np.arctan(x.imag / x.real)
 
     def _label_upper(self) -> Tuple[str, str]:
         return ('(a) Principal Value of Phase Response',
@@ -39,8 +44,9 @@ class PhaseResponseFigure(BaseFigure):
                 r'$\mathregular{arg[H(e^{j\omega})]}$')
 
     def _plot_lower(self, x: np.ndarray):
-        def continue_phase_of_H(omega: float):
-            # TODO return self.unwrap_ARG(self.ARG(self.H_of_omega(omega)))
-            return self.arg(self.H_of_omega(omega))
+        def principal_phase_of_H(omega: float):
+            return self.ARG(self.H_of_omega(omega))
 
-        utils.do_plot(self.lower, x, np.apply_along_axis(continue_phase_of_H, 0, x))
+        y = self.unwrap_ARG(np.apply_along_axis(principal_phase_of_H, 0, x))
+
+        utils.do_plot(self.lower, x, y)

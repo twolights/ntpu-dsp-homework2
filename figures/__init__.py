@@ -4,13 +4,15 @@ from ._common import BaseFigure
 
 from .phase_response import PhaseResponseFigure
 from .group_delay import GroupDelayFigure
+from .signal_and_dtft import SignalAndDtftFigure
 
 ALL = 'all'
-AVAILABLE_FIGURES = 'a', 'b'
 FIGURE_CLASS_MAPPING = {
     'a': PhaseResponseFigure,
     'b': GroupDelayFigure,
+    'c': SignalAndDtftFigure,
 }
+AVAILABLE_FIGURES = FIGURE_CLASS_MAPPING.keys()
 
 
 def get_figure(identifier: str, H_of_omega: Callable) -> BaseFigure:

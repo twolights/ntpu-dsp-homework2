@@ -35,3 +35,20 @@ def group_delay(phase_H: np.ndarray, d_omega: float):
         # grp[H(e^jw)] = -d(angle H(e^jw))/d_omega
         y[i] = -1 * (phase_H[i + 1] - v) / d_omega
     return y
+
+
+# def hanning_window_x(x: float, M: int):
+#     return 0.5 - 0.5 * np.cos(2 * np.pi * x / M - 1)
+
+def hanning_window(M: int):
+    result = np.ndarray(shape=(M, ))
+    for n in range(0, M):
+        result[n] = 0.5 - 0.5 * np.cos(2 * np.pi * n / (M - 1))
+    return result
+
+
+def dtft(y: np.ndarray, omega: float):
+    result = 0 + 0j
+    for n, v in enumerate(y):
+        result += v * np.exp(-1j * omega * n)
+    return result

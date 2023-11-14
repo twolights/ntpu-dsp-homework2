@@ -37,9 +37,6 @@ def group_delay(phase_H: np.ndarray, d_omega: float):
     return y
 
 
-# def hanning_window_x(x: float, M: int):
-#     return 0.5 - 0.5 * np.cos(2 * np.pi * x / M - 1)
-
 def hanning_window(M: int):
     result = np.ndarray(shape=(M, ))
     for n in range(0, M):

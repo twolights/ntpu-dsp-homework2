@@ -55,7 +55,7 @@ class SignalAndDtftFigure(BaseFigure):
         self.y = y
 
     def _label_lower(self) -> Tuple[str, str]:
-        return ('(b) Unwrapped Phase Response',
+        return (r'(b) Magnitude of DTFT of $\it{x[n]}$',
                 r'$\mathregular{|X(e^{j\omega})|}$')
 
     def _plot_lower(self, x: np.ndarray) -> None:

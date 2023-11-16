@@ -30,6 +30,4 @@ class GroupDelayFigure(BaseFigure):
         def magnitude_of_H(omega: float):
             return magnitude(self.H_of_omega(omega))
 
-        # TODO Shape of magnitude is correct. However the value seems to be tripled
-        # TODO Might wanna check the system
         utils.do_plot(self.lower, x, np.apply_along_axis(magnitude_of_H, 0, x))

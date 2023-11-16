@@ -7,15 +7,6 @@ from . import BaseFigure
 from ._common import utils
 from ._sample_signal import get_x_range, get_sample_signal
 
-SIGNAL_STEP = 50
-SIGNAL_TIME_START = 0
-SIGNAL_TIME_STOP = 300
-SIGNAL_TOTAL_POINTS = 301
-
-OMEGAS = [0.8 * np.pi, 0.2 * np.pi, 0.4 * np.pi]
-
-SIGNAL_SIZE = 50
-
 
 def _LCCDE_prototype(a: Union[list, np.ndarray],
                      b: Union[list, np.ndarray],

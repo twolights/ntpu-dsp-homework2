@@ -18,6 +18,9 @@ class PhaseResponseFigure(BaseFigure):
         super().__init__(H_of_omega)
         self.principal_phase_of_H = functools.partial(principal_phase, H_of_omega)
 
+    def _figure_title(self) -> str:
+        return 'Figure A - Principal Phase Value and Continuous Phase'
+
     def _label_upper(self) -> Tuple[str, str]:
         return ('(a) Principal Value of Phase Response',
                 r'$\mathregular{ARG[H(e^{j\omega})]}$')

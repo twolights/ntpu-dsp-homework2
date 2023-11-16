@@ -60,6 +60,9 @@ class LCCDEFilteringFigure(BaseFigure):
         self.x, self.sample_signal = get_sample_signal()
         self.x_range = get_x_range()
 
+    def _figure_title(self) -> str:
+        return 'Figure D - Input Signal and LCCDE Filtering'
+
     def _label_upper(self) -> Tuple[str, str]:
         return (r'(a) Waveform of LCCDE processed signal $\it{y[n]}$',
                 '')

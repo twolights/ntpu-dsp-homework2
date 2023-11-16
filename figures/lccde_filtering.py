@@ -5,7 +5,6 @@ import numpy as np
 
 from . import BaseFigure
 from ._common import utils
-from ._functions import hanning_window
 from ._sample_signal import get_x_range, get_sample_signal
 
 SIGNAL_STEP = 50
@@ -65,7 +64,6 @@ class LCCDEFilteringFigure(BaseFigure):
         return (r'(a) Waveform of LCCDE processed signal $\it{y[n]}$',
                 '')
 
-    # def _plot(self) -> None:
     def _plot_upper(self, x: np.ndarray) -> None:
         H1 = self._create_LCCDE(
             [1, -0.8 * (np.exp(0.4 * np.pi * 1j) + np.exp(-0.4 * np.pi * 1j)), 0.8 ** 2],

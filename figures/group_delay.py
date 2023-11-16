@@ -7,6 +7,9 @@ from ._functions import ARG, unwrap_ARG, magnitude, group_delay
 
 
 class GroupDelayFigure(BaseFigure):
+    def _figure_title(self) -> str:
+        return 'Figure B - Group Delay and Magnitude'
+
     def _label_upper(self) -> Tuple[str, str]:
         return (r'(a) Group delay of $\it{H(z)}$',
                 r'$\mathregular{grd[H(e^{j\omega})]}$')

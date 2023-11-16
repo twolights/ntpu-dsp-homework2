@@ -20,6 +20,9 @@ class SignalAndDtftFigure(BaseFigure):
         self.x, self.sample_signal = get_sample_signal()
         self.x_range = get_x_range()
 
+    def _figure_title(self) -> str:
+        return 'Figure C - Input Signal and Corresponding DTFT'
+
     def _label_upper(self) -> Tuple[str, str]:
         return (r'(a) Waveform of signal $\it{x[n]}$',
                 '')

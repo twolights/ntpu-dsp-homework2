@@ -21,6 +21,9 @@ class BaseFigure:
         self.figure, (self.upper, self.lower) = utils.create_standard_figure()
         self.H_of_omega = H_of_omega
 
+    def _figure_title(self) -> str:
+        raise NotImplementedError()
+
     def _label_upper(self) -> Tuple[str, str]:
         raise NotImplementedError()
 
@@ -34,6 +37,8 @@ class BaseFigure:
         raise NotImplementedError()
 
     def _plot(self) -> None:
+        self.figure.suptitle(self._figure_title())
+
         x = utils.create_standard_x()
         upper_title, upper_y_label = self._label_upper()
         utils.label_plots(self.upper, title=upper_title, y_label=upper_y_label)

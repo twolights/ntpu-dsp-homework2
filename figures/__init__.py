@@ -5,12 +5,14 @@ from ._common import BaseFigure
 from .phase_response import PhaseResponseFigure
 from .group_delay import GroupDelayFigure
 from .signal_and_dtft import SignalAndDtftFigure
+from .lccde_filtering import LCCDEFilteringFigure
 
 ALL = 'all'
 FIGURE_CLASS_MAPPING = {
     'a': PhaseResponseFigure,
     'b': GroupDelayFigure,
     'c': SignalAndDtftFigure,
+    'd': LCCDEFilteringFigure,
 }
 AVAILABLE_FIGURES = FIGURE_CLASS_MAPPING.keys()
 

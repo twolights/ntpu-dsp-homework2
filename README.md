@@ -18,7 +18,7 @@ Source code is hosted at https://github.com/twolights/ntpu-dsp-homework2
  ```
 2. Activate virtualenv
 ```shell
-# ./env/bin/activate
+# . env/bin/activate
 ```
 3. Install dependency packages
 ```shell

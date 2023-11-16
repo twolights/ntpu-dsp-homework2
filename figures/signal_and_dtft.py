@@ -5,15 +5,7 @@ import numpy as np
 from . import BaseFigure
 from ._common import utils
 from ._functions import hanning_window, dtft, magnitude
-
-SIGNAL_STEP = 50
-SIGNAL_TIME_START = 0
-SIGNAL_TIME_STOP = 300
-SIGNAL_TOTAL_POINTS = 301
-
-SIGNAL_SIZE = 50
-
-OMEGAS = [0.8 * np.pi, 0.2 * np.pi, 0.4 * np.pi]
+from ._sample_signal import get_x_range, get_sample_signal
 
 
 class SignalAndDtftFigure(BaseFigure):
@@ -39,16 +31,11 @@ class SignalAndDtftFigure(BaseFigure):
                 '')
 
     def _setup_upper(self) -> None:
-        x_range = np.arange(SIGNAL_TIME_START, SIGNAL_TIME_STOP + 1, step=SIGNAL_STEP)
+        x_range = get_x_range()
         self.upper.set_xticks(x_range, x_range)
 
     def _plot_upper(self, x: np.ndarray) -> None:
-        x = np.linspace(SIGNAL_TIME_START, SIGNAL_TIME_STOP, SIGNAL_TOTAL_POINTS)
-        y = np.zeros_like(x)
-        M = self._find_index_for(x, SIGNAL_SIZE)
-        sub_signals = np.concatenate([self._create_sub_signal(M, omega) for omega in OMEGAS])
-        length = sub_signals.shape[0]
-        y[:length] = sub_signals
+        x, y = get_sample_signal()
         self.upper.set_xlabel(r' Sample number $\it{(n)}$')
         self._setup_upper()
         utils.do_plot(self.upper, x, y, y_limit=(-1, 1))

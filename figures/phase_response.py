@@ -12,11 +12,11 @@ class PhaseResponseFigure(BaseFigure):
     principal_phase_of_H: Callable
 
     def __init__(self, H_of_omega: Callable) -> None:
-        def principal_phase_of_H(H: Callable, omega: float):
+        def principal_phase(H: Callable, omega: float) -> complex:
             return ARG(H(omega))
 
         super().__init__(H_of_omega)
-        self.principal_phase_of_H = functools.partial(principal_phase_of_H, H_of_omega)
+        self.principal_phase_of_H = functools.partial(principal_phase, H_of_omega)
 
     def _label_upper(self) -> Tuple[str, str]:
         return ('(a) Principal Value of Phase Response',

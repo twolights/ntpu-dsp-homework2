@@ -5,7 +5,6 @@ import numpy as np
 
 from . import BaseFigure
 from ._common import utils
-from ._functions import hanning_window
 from ._sample_signal import get_x_range, get_sample_signal
 
 SIGNAL_STEP = 50
@@ -22,7 +21,7 @@ def _LCCDE_prototype(a: Union[list, np.ndarray],
                      b: Union[list, np.ndarray],
                      n: int,
                      x: np.ndarray, y: np.ndarray) -> complex:
-    def _value_or_initial_rest(o: np.ndarray, index: int):
+    def _value_or_initial_rest(o: np.ndarray, index: int) -> complex:
         if index < 0:
             return 0
         return o[index]
@@ -45,11 +44,11 @@ class LCCDEFilteringFigure(BaseFigure):
         return functools.partial(_LCCDE_prototype, a, b)
 
     @classmethod
-    def _c_of_k(cls, k: int):
+    def _c_of_k(cls, k: int) -> complex:
         return 0.95 * np.exp(1j * (0.15 * np.pi + 0.02 * np.pi * k))
 
     @classmethod
-    def _H2_c_of_k(cls, k: int):
+    def _H2_c_of_k(cls, k: int) -> Callable:
         c_k = cls._c_of_k(k)
         c_k_star = np.conj(c_k)
         a = [1, -1 * (c_k + c_k_star), 0.95 ** 2]
@@ -65,7 +64,6 @@ class LCCDEFilteringFigure(BaseFigure):
         return (r'(a) Waveform of LCCDE processed signal $\it{y[n]}$',
                 '')
 
-    # def _plot(self) -> None:
     def _plot_upper(self, x: np.ndarray) -> None:
         H1 = self._create_LCCDE(
             [1, -0.8 * (np.exp(0.4 * np.pi * 1j) + np.exp(-0.4 * np.pi * 1j)), 0.8 ** 2],

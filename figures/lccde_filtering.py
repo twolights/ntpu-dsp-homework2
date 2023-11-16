@@ -21,7 +21,7 @@ def _LCCDE_prototype(a: Union[list, np.ndarray],
                      b: Union[list, np.ndarray],
                      n: int,
                      x: np.ndarray, y: np.ndarray) -> complex:
-    def _value_or_initial_rest(o: np.ndarray, index: int):
+    def _value_or_initial_rest(o: np.ndarray, index: int) -> complex:
         if index < 0:
             return 0
         return o[index]
@@ -44,11 +44,11 @@ class LCCDEFilteringFigure(BaseFigure):
         return functools.partial(_LCCDE_prototype, a, b)
 
     @classmethod
-    def _c_of_k(cls, k: int):
+    def _c_of_k(cls, k: int) -> complex:
         return 0.95 * np.exp(1j * (0.15 * np.pi + 0.02 * np.pi * k))
 
     @classmethod
-    def _H2_c_of_k(cls, k: int):
+    def _H2_c_of_k(cls, k: int) -> Callable:
         c_k = cls._c_of_k(k)
         c_k_star = np.conj(c_k)
         a = [1, -1 * (c_k + c_k_star), 0.95 ** 2]
